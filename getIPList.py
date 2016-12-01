@@ -16,16 +16,18 @@ socket.setdefaulttimeout(timeout)
 
 ip_pattern = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
 
-def getIP(site):
-  req = urllib2.Request(site)
-  response = urllib2.urlopen(req)
-  html_page = response.read()
-  iplist = ip_pattern.findall(html_page)
-  return iplist
+
+def getIP(url):
+    req = urllib2.Request(url)
+    response = urllib2.urlopen(req)
+    html_page = response.read()
+    iplist = ip_pattern.findall(html_page)
+    return iplist
+
 
 def main():
   if socket.getfqdn(socket.gethostname()).split(".")[-2] == 'astelit':
-    # Proxy settings
+    # Check if in astelit network, than set proxy settings
     proxy_support = urllib2.ProxyHandler({"http": "http://proxy.astelit.ukr:3128",\
                                           "https": "http://proxy.astelit.ukr:3128"} )
     opener = urllib2.build_opener(proxy_support)
@@ -34,7 +36,7 @@ def main():
   url = 'https://www.colocall.net/uaix/'
   iplist = getIP(url)
   for ip in iplist:
-   print ip
+    print ip
 
 if __name__ == "__main__":
   main()
