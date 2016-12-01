@@ -9,7 +9,7 @@ Usage:
 import urllib2
 import re
 
-url = 'http://192.168.56.102/uaix.html'
+url = 'https://www.colocall.net/uaix/'
 
 ip_pattern = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
 
