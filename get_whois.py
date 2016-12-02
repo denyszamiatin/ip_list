@@ -36,6 +36,6 @@ if __name__ == "__main__":
     for item in list2:
         print item[0] + ':' + item[1]
 
-   
+
 
 
