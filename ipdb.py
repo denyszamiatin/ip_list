@@ -43,7 +43,7 @@ def updatedb(ip_list):
       writer.writerow([ip, pref])
 
 
-def searchDB(ip='32'):
+def searchDB(ip='.'):
   with open(path.join(db_path, _getlatestdbfile()), 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     next(reader, None)
@@ -60,9 +60,9 @@ def main():
   url = 'http://192.168.56.102/uaix.html'
   try:
     if argv[1] == 'up':
+      updatedb(getip(url)[0:10])
       searchDB()
-#      updatedb(getip(url)[0:10])
-#      _getdb()
+    #      _getdb()
     else:
       print "Main"
   except IOError as er:
