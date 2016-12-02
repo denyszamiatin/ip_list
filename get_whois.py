@@ -3,13 +3,13 @@
 import re
 import urllib2
 
-def get_whois_data_list(url):
-    url = 'https://hostmaster.ua/whois.php?domain=' + url
+def get_whois_data_list(domain):
+    url = 'https://hostmaster.ua/whois.php?domain=' + domain
     request = urllib2.Request(url)
     response = urllib2.urlopen(request)
     html_page = response.read()
-    r = re.findall(r'<td.*>(.*)<\/td><td>(.*)<\/td>', html_page)
-    return r
+
+    return re.findall(r'<td.*>(.*)<\/td><td>(.*)<\/td>', html_page)
 
 
 if __name__ == "__main__":
