@@ -1,7 +1,9 @@
+# codding: utf-8
+
 import re
 import urllib2
 
-def get_whois(url):
+def get_whois_data_list(url):
     url = 'https://hostmaster.ua/whois.php?domain=' + url
     request = urllib2.Request(url)
     response = urllib2.urlopen(request)
@@ -9,7 +11,10 @@ def get_whois(url):
     r = re.findall(r'<td.*>(.*)<\/td><td>(.*)<\/td>', html_page)
     return r
 
-list = get_whois('lifecell.ua')
 
-for item in list:
-    print item[0] + ':' + item[1]
+if __name__ == "__main__":
+    list = get_whois_data_list('lifecell.ua')
+
+    for item in list:
+        print item[0] + ':' + item[1]
+
