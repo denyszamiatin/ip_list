@@ -16,20 +16,23 @@ socket.setdefaulttimeout(timeout)
 
 ip_pattern = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
 
-def getIP(site):
+
+def getip(site):
   req = urllib2.Request(site)
   response = urllib2.urlopen(req)
   html_page = response.read()
   iplist = ip_pattern.findall(html_page)
   return iplist
 
+
 def main():
   url = 'http://192.168.56.102/uaix.html'
-  iplist = getIP(url)
+  iplist = getip(url)
   print url
   print iplist[0:10]
-  #for ip in iplist:
-  # print ip
+#   for ip in iplist:
+#   print ip
+
 
 if __name__ == "__main__":
   main()
