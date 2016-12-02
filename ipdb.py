@@ -11,15 +11,30 @@ Usage:
 """
 
 import csv
-from getIPList import getIP
-from sys import argv, exc_info
+from getIPList import getip
+from sys import argv
 from time import strftime
-
-file_time = strftime("%Y%m%d_%H%M%S")
-ip_db = r'.\ipdb\iplist' + file_time + '.csv'
+from os import path, listdir
 
 
-def updateDB(ip_list):
+file_name = r'iplist.' + strftime("%Y%m%d%H%M%S") + '.csv'
+db_path = r'.\ipdb'
+ip_db = path.join(db_path, file_name)
+
+
+def _getdb():
+  with open(ip_db, 'r') as csv_file:
+    reader = csv.reader(csv_file, delimiter=',')
+    for line in reader:
+      print line
+
+
+def _getlatestdbfile():
+   return sorted(listdir(db_path))[-1]
+
+
+
+def updatedb(ip_list):
   with open(ip_db, 'w') as csv_file:
     writer = csv.writer(csv_file, delimiter=',', lineterminator='\n', escapechar='|', quoting=csv.QUOTE_NONE)
     writer.writerow(['IP', 'Prefix'])
@@ -28,11 +43,13 @@ def updateDB(ip_list):
       writer.writerow([ip, pref])
 
 
-def getDB():
-  with open(ip_db, 'r') as csv_file:
+def searchDB(ip='32'):
+  with open(path.join(db_path, _getlatestdbfile()), 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
+    next(reader, None)
     for line in reader:
-      print line
+      if ip in line[0]:
+        print line
 
 
 # iplist = dict(reader)
@@ -43,12 +60,13 @@ def main():
   url = 'http://192.168.56.102/uaix.html'
   try:
     if argv[1] == 'up':
-      updateDB(getIP(url)[0:10])
-      getDB()
+      searchDB()
+#      updatedb(getip(url)[0:10])
+#      _getdb()
     else:
       print "Main"
-  except IOError as e:
-    print e
+  except IOError as er:
+    print er
     # print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
 
