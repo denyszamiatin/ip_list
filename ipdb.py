@@ -17,12 +17,11 @@ from time import strftime
 from os import path, listdir
 
 
-file_name = r'iplist.' + strftime("%Y%m%d%H%M%S") + '.csv'
-db_path = r'.\ipdb'
+DB_PATH = r'.\ipdb'
 
 
 def _getdb():
-  ip_db_latest = path.join(db_path, _getlatestdbfile())
+  ip_db_latest = path.join(DB_PATH, _getlatestdbfile())
   with open(ip_db_latest, 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     for line in reader:
@@ -30,11 +29,11 @@ def _getdb():
 
 
 def _getlatestdbfile():
-   return sorted(listdir(db_path))[-1]
+   return sorted(listdir(DB_PATH))[-1]
 
 
 def updatedb(ip_list):
-  ip_db_new = path.join(db_path, r'iplist.' + strftime("%Y%m%d%H%M%S") + '.csv')
+  ip_db_new = path.join(DB_PATH, r'iplist.' + strftime("%Y%m%d%H%M%S") + '.csv')
   with open(ip_db_new, 'w') as csv_file:
     writer = csv.writer(csv_file, delimiter=',', lineterminator='\n', escapechar='|', quoting=csv.QUOTE_NONE)
     writer.writerow(['IP', 'Prefix'])
@@ -44,17 +43,13 @@ def updatedb(ip_list):
 
 
 def searchDB(ip='.'):
-  ip_db_srch = path.join(db_path, _getlatestdbfile())
+  ip_db_srch = path.join(DB_PATH, _getlatestdbfile())
   with open(ip_db_srch, 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     next(reader, None)
     for line in reader:
       if ip in line[0]:
         print line
-
-
-# iplist = dict(reader)
-#  return iplist
 
 
 if __name__ == "__main__":
