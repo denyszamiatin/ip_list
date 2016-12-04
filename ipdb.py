@@ -47,9 +47,8 @@ def searchDB(ip='.'):
   with open(ip_db_srch, 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     next(reader, None)
-    for line in reader:
-      if ip in line[0]:
-        print line
+    lst = [x[0] for x in reader if ip in x[0]]
+    return lst
 
 
 if __name__ == "__main__":
@@ -57,7 +56,7 @@ if __name__ == "__main__":
     url = 'https://www.colocall.net/uaix/prefixes.txt'
     if argv[1] == 'up':
         updatedb(_getip(url)[0:10])
-        searchDB()
+        print searchDB()
     else:
       print "Main"
   except IOError as er:
