@@ -1,10 +1,11 @@
 """
-saveIPList.py
-    saves list of IP to csv file.
-    File name: iplist_date_time.csv
-    File format:
-    header('IP', 'Preix')
-    rows(IP,prefix)
+ipdb.py
+    1) Saves list of IP to csv file.
+      File name: iplist%Y%m%d%H%M%S.csv
+      File format:
+        header('IP', 'Preix')
+        rows(IP,prefix)
+    2) Search ip in latest db file
 
 Usage:
 
