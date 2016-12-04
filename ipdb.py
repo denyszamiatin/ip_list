@@ -33,9 +33,8 @@ def _getlatestdbfile():
    return sorted(listdir(db_path))[-1]
 
 
-
 def updatedb(ip_list):
-  with open(ip_db, 'w') as csv_file:
+  with open(path.join(db_path, r'iplist.' + strftime("%Y%m%d%H%M%S") + '.csv'), 'w') as csv_file:
     writer = csv.writer(csv_file, delimiter=',', lineterminator='\n', escapechar='|', quoting=csv.QUOTE_NONE)
     writer.writerow(['IP', 'Prefix'])
     for ip in ip_list:
