@@ -9,30 +9,47 @@ Usage:
 import urllib2
 import re
 import socket
+# import pprint
 
 # timeout in seconds
-timeout = 15
+timeout = 5
 socket.setdefaulttimeout(timeout)
 
-ip_pattern = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
+URL = 'http://192.168.56.102/uaix.html'
+IP_PATTERN = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
+PROXY = None
+# urllib2.ProxyHandler({
+#         "http": "http://proxy.astelit.ukr:3128",
+#         "https": "http://proxy.astelit.ukr:3128"
+#     })
 
 
-def getip(site):
+def _getip(site):
   req = urllib2.Request(site)
   response = urllib2.urlopen(req)
   html_page = response.read()
-  iplist = ip_pattern.findall(html_page)
-  return iplist
+  iplst = IP_PATTERN.findall(html_page)
+  return iplst
 
 
-def main():
-  url = 'http://192.168.56.102/uaix.html'
-  iplist = getip(url)
-  print url
-  print iplist[0:10]
-#   for ip in iplist:
-#   print ip
+def get_content(url):
+    response = urllib2.urlopen(url)
+    return response.read()
+
+
+def parse_ip(text):
+  return IP_PATTERN.findall(text)
+
+
+def set_proxy():
+  if PROXY:
+    opener = urllib2.build_opener(PROXY)
+    urllib2.install_opener(opener)
 
 
 if __name__ == "__main__":
-  main()
+  set_proxy()
+  # pprint.pprint(parse_ip(get_content(URL)))
+  iplist = _getip(URL)
+  print URL
+  print iplist[0:10]
