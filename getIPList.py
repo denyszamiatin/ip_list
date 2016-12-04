@@ -9,13 +9,13 @@ Usage:
 import urllib2
 import re
 import socket
-# import pprint
+import pprint
 
 # timeout in seconds
 timeout = 5
 socket.setdefaulttimeout(timeout)
 
-URL = 'http://192.168.56.102/uaix.html'
+URL = 'https://www.colocall.net/uaix/prefixes.txt'
 IP_PATTERN = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
 PROXY = None
 # urllib2.ProxyHandler({
@@ -49,7 +49,5 @@ def set_proxy():
 
 if __name__ == "__main__":
   set_proxy()
-  # pprint.pprint(parse_ip(get_content(URL)))
-  iplist = _getip(URL)
-  print URL
-  print iplist[0:10]
+  pprint.pprint(parse_ip(get_content(URL))[0:10])
+
