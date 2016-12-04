@@ -13,7 +13,7 @@ import pprint
 
 "You can use list for easy parsing: https://www.colocall.net/uaix/prefixes.txt"
 
-IP_PATTERN = re.compile (r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
+IP_PATTERN = re.compile(r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}')
 URL = 'https://www.colocall.net/uaix/'
 PROXY = None
 # urllib2.ProxyHandler({
