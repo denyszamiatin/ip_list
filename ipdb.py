@@ -22,7 +22,10 @@ DB_PATH = r'.\ipdb'
 
 
 def _get_latest_db_file():
-   return sorted(listdir(DB_PATH))[-1]
+  try:
+    return sorted(listdir(DB_PATH))[-1]
+  except IndexError:
+    return 'DB catalog emty'
 
 
 def update_db(ip_list):
@@ -37,20 +40,24 @@ def update_db(ip_list):
 
 
 def search_in_db(ip='.'):
-  ip_db_srch = path.join(DB_PATH, _get_latest_db_file())
-  with open(ip_db_srch, 'r') as csv_file:
-    reader = csv.reader(csv_file, delimiter=',')
-    next(reader, None)
-    lst = [x[0] for x in reader if ip in x[0]]
-    return lst
+  if _get_latest_db_file() == 'DB catalog emty':
+    print _get_latest_db_file()
+    lst = ['DB catalog emty']
+  elif 'iplist' in _get_latest_db_file():
+    ip_db_srch = path.join(DB_PATH, _get_latest_db_file())
+    with open(ip_db_srch, 'r') as csv_file:
+      reader = csv.reader(csv_file, delimiter=',')
+      next(reader, None)
+      lst = [x[0] for x in reader if ip in x[0]]
+  return lst
 
 
 if __name__ == "__main__":
   try:
-    url = 'https://www.colocall.net/uaix/prefixes.txt'
     if argv[1] == 'up':
-      update_db(parse_ip(get_content(url))[0:20])
-      print search_in_db('2')
+ #     update_db(parse_ip(get_content('https://www.colocall.net/uaix/prefixes.txt'))[0:20])
+  #    print search_in_db('2')
+      print 'iplist' in _get_latest_db_file()
   except IOError as er:
     print "I/O error({0}): {1}".format(er.errno, er.strerror)
   except IndexError as er:
